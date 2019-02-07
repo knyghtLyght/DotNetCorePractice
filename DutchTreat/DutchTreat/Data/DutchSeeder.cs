@@ -26,26 +26,35 @@ namespace DutchTreat.Data
 
             if (!_ctx.Products.Any())
             {
-                // Meed to add sample data
                 var filepath = Path.Combine(_hosting.ContentRootPath, "Data/art.json");
                 var json = File.ReadAllText(filepath);
                 var products = JsonConvert.DeserializeObject<IEnumerable<Product>>(json);
                 _ctx.Products.AddRange(products);
 
-                var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();
-                if (order != null)
-                {
-                    order.Items = new List<OrderItem>()
-                    {
-                        new OrderItem()
-                        {
-                            Product = products.First(),
-                            Quantity = 5,
-                            UnitPrice = products.First().Price
-                        }
-                    };
-                }
+                _ctx.SaveChanges();
+            }
 
+            if (!_ctx.Orders.Any())
+            {
+                _ctx.Orders.Add(new Order()
+                {
+                    OrderDate = DateTime.UtcNow,
+                    OrderNumber = "12345"
+                });
+
+                _ctx.SaveChanges();
+
+                var order = _ctx.Orders.Where(o => o.Id == 1).FirstOrDefault();
+
+                order.Items = new List<OrderItem>()
+                {
+                    new OrderItem()
+                    {
+                        Product = _ctx.Products.OrderBy(p => p.Id).FirstOrDefault(),
+                        Quantity = 5,
+                        UnitPrice = _ctx.Products.OrderBy(p => p.Id).FirstOrDefault().Price
+                    }
+                };
 
                 _ctx.SaveChanges();
             }
