@@ -2,11 +2,20 @@
 <html>
 <head>
     <title>Dutch Treat @ViewBag.Title</title>
-    @*bootstrap for base styling and structure*@
-    <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
-    @*font awesome for icon fonts*@
-    <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/site.css" rel="stylesheet" />
+    <environment names="Development">
+        @*bootstrap for base styling and structure*@
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+        @*font awesome for icon fonts*@
+        <link href="~/node_modules/font-awesome/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        @*bootstrap for base styling and structure*@
+        <link href="~/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+        @*font awesome for icon fonts*@
+        <link href="~/node_modules/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="~/css/site.css" rel="stylesheet" />
+    </environment>
 </head>
 <body>
     <header class="container">
@@ -53,9 +62,20 @@
         <div class="text-center">Copyright 2017 Dutch Treat LLC</div>
     </footer>
 
-    <script src="~/node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/index.js"></script>
+    <environment names="Development">
+        <script src="~/node_modules/jquery/dist/jquery.js"></script>
+        <script src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="~/js/index.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="//ajax.aspnetcdn.com/ajax/jquery/jquery-3.2.1.min.js"
+                asp-fallback-src="~/node_modules/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"></script>
+        <script src="//ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal" ></script>
+        <script src="~/js/index.js"></script>
+    </environment>
     @RenderSection("Scripts", false)
 </body>
 </html>
