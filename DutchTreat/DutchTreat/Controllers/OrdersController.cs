@@ -99,7 +99,7 @@ namespace DutchTreat.Controllers
                     newOrder.User = currentUser;
 
                     // Add Entity
-                    repository.AddEntity(newOrder);
+                    repository.AddOrder(newOrder);
 
                     // If successfully saved extract the new order back int a VM for view return
                     if (repository.SaveAll())

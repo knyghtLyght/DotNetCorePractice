@@ -7,11 +7,23 @@ var ProductList = /** @class */ (function () {
         this.products = [];
         this.products = data.products;
     }
+    ProductList.prototype.ngOnInit = function () {
+        var _this = this;
+        this.data.loadProducts()
+            .subscribe(function (success) {
+            if (success) {
+                _this.products = _this.data.products;
+            }
+        });
+    };
+    ProductList.prototype.addProduct = function (product) {
+        this.data.AddToOrder(product);
+    };
     ProductList = tslib_1.__decorate([
         Component({
             selector: "product-list",
             templateUrl: "productlist.component.html",
-            styleUrls: []
+            styleUrls: ["productList.component.css"]
         }),
         tslib_1.__metadata("design:paramtypes", [DataService])
     ], ProductList);
