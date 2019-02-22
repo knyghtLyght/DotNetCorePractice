@@ -98,6 +98,7 @@ namespace DutchTreat
             // Turn on Identity
             app.UseAuthentication();
 
+            // Activate MVC and set default route
             app.UseMvc(cfg =>
             {
                 cfg.MapRoute("Default",
